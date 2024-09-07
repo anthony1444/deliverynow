@@ -7,8 +7,8 @@
     <mat-form-field appearance="fill">
       <mat-label>Tabulador</mat-label>
       <mat-select (selectionChange)="onTabuladorChange($event)">
-        <mat-option *ngFor="let tabulador of tabulador" [value]="tabulador.id">
-          {{ tabulador.name }}
+        <mat-option *ngFor="let tabulador of tabuladors" [value]="tabulador.Id">
+          {{ tabulador.Name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -17,8 +17,9 @@
     <mat-form-field appearance="fill">
       <mat-label>Zona</mat-label>
       <mat-select (selectionChange)="onZonaChange($event)" [disabled]="zonasDisponibles.length === 0">
-        <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona.id">
-          {{ zona.name }}
+        <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona.Id">
+          {{ zona.Name }}
+         
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -28,7 +29,10 @@
     <h3>Barrios Disponibles</h3>
     <mat-list>
       <mat-list-item *ngFor="let barrio of barriosDisponibles" (click)="onBarrioSelect(barrio)">
-        {{ barrio.name }} - {{ barrio.price | currency }}
+        {{ barrio.Name }} - {{ barrio.Price | currency }}
+        <button mat-icon-button (click)="openEditDialog(barrio)">
+          <mat-icon>edit</mat-icon>
+        </button>
       </mat-list-item>
     </mat-list>
   </div>
