@@ -45,4 +45,18 @@
     margin-right: 8px;
     color: #00796b;
   }
+  /* app.component.scss */
+.spinner-container {
+  display: flex;
+  justify-content: center;  /* Centra horizontalmente */
+  align-items: center;      /* Centra verticalmente */
+  height: 100vh;            /* Ocupa toda la altura de la ventana */
+  width: 100vw;             /* Ocupa toda la anchura de la ventana */
+  position: fixed;          /* Asegura que el spinner esté fijo en la pantalla */
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+  z-index: 1000;            /* Asegura que el spinner esté por encima de otros elementos */
+}
+
   
