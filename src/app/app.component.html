@@ -1,38 +1,53 @@
-<div *ngIf="loading" class="spinner-container">
-  <mat-spinner></mat-spinner>
-</div>
-
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Selecciona Tabulador, Zona y Barrio</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <!-- Selector de Tabulador -->
+<div class="container">
+  <!-- Spinner para cuando los datos están cargando -->
+  <div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!-- Contenido principal que se muestra después de que los datos han cargado -->
+  <div *ngIf="!loading" class="content-container">
+    <!-- Campo de autocompletado para Tabulador -->
     <mat-form-field appearance="fill">
-      <mat-label>Tabulador</mat-label>
-      <mat-select (selectionChange)="onTabuladorChange($event)">
+      <mat-label>Selecciona un Tabulador</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Buscar tabulador"
+        [matAutocomplete]="autoTabulador"
+        [(ngModel)]="selectedTabuladorName"
+        (ngModelChange)="onTabuladorChange($event)"
+      />
+      <mat-autocomplete #autoTabulador="matAutocomplete">
         <mat-option *ngFor="let tabulador of tabuladors" [value]="tabulador.Id">
           {{ tabulador.Name }}
         </mat-option>
-      </mat-select>
+      </mat-autocomplete>
     </mat-form-field>
 
-    <!-- Selector de Zona -->
-    <mat-form-field appearance="fill">
-      <mat-label>Zona</mat-label>
-      <mat-select (selectionChange)="onZonaChange($event)" [disabled]="zonasDisponibles.length === 0">
+    <!-- Campo de autocompletado para Zona -->
+    <mat-form-field appearance="fill" *ngIf="zonasDisponibles.length > 0">
+      <mat-label>Selecciona una Zona</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Buscar zona"
+        [matAutocomplete]="autoZona"
+        [(ngModel)]="selectedZona"
+        (ngModelChange)="onZonaChange($event)"
+      />
+      <mat-autocomplete #autoZona="matAutocomplete">
         <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona.Id">
           {{ zona.Name }}
-         
         </mat-option>
-      </mat-select>
+      </mat-autocomplete>
     </mat-form-field>
 
-  <!-- Lista de Barrios -->
-  <div *ngIf="barriosDisponibles.length > 0">
-    <h3>Barrios Disponibles</h3>
-    <mat-list>
-      <mat-list-item *ngFor="let barrio of barriosDisponibles" (click)="onBarrioSelect(barrio)">
+    <!-- Lista de Barrios Disponibles -->
+    <mat-list *ngIf="barriosDisponibles.length > 0">
+      <h3>Barrios Disponibles</h3>
+      <mat-list-item
+        *ngFor="let barrio of barriosDisponibles"
+        (click)="onBarrioSelect(barrio)"
+      >
         {{ barrio.Name }} - {{ barrio.Price | currency }}
         <button mat-icon-button (click)="openEditDialog(barrio)">
           <mat-icon>edit</mat-icon>
@@ -40,11 +55,4 @@
       </mat-list-item>
     </mat-list>
   </div>
-      <!-- Información del Barrio Seleccionado -->
-      <!-- <div *ngIf="selectedBarrio">
-        <h3>Información del Barrio Seleccionado</h3>
-        <p><strong>Nombre:</strong> {{ selectedBarrio.name }}</p>
-        <p><strong>Precio:</strong> {{ selectedBarrio.price | currency }}</p>
-      </div> -->
-  </mat-card-content>
-</mat-card>
+</div>

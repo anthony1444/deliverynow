@@ -1,146 +1,204 @@
-import { CommonModule } from '@angular/common';
+// import { CommonModule } from '@angular/common';
+// import { Component } from '@angular/core';
+// import { FormsModule } from '@angular/forms';
+// import { RouterOutlet } from '@angular/router';
+// import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+// import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+// import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatListModule } from '@angular/material/list';
+// import { MatCardModule } from '@angular/material/card';
+// import { MatIconModule } from '@angular/material/icon';
+// import { MatGridListModule } from '@angular/material/grid-list';
+// import { HttpClient, HttpClientModule, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+// import { catchError, Observable, throwError } from 'rxjs';
+// import { MatDialog } from '@angular/material/dialog';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatAutocompleteModule } from '@angular/material/autocomplete';
+// import { ModalFormNeiborhoodComponent } from './modal-form-neiborhood/modal-form-neiborhood.component';
+// import { MatInputModule } from '@angular/material/input';
+
+// export interface Barrio {
+//   Id: number;
+//   Name: string;
+//   Price: string | number;
+//   Idzone: number;
+// }
+
+// export interface Zona {
+//   Id: number;
+//   Name: string;
+//   Idtabulador: number;
+//   Neiborhood: Barrio[]; // Relación de uno a muchos con Barrios
+// }
+
+// export interface Tabulador {
+//   Id: number;
+//   Name: string;
+//   Zones: Zona[]; // Relación de uno a muchos con Zonas
+// }
+
+
+// @Component({
+//   selector: 'app-root',
+//   standalone: true,
+//   imports: [
+//     RouterOutlet,
+//     FormsModule,
+//     CommonModule,
+//     MatGridListModule,
+//     MatFormFieldModule,
+//     HttpClientModule,
+//     MatButtonModule,
+//     MatSelectModule,
+//     MatIconModule,
+//     MatListModule,
+//     MatCardModule,
+//     MatAutocompleteModule,
+//     MatProgressSpinnerModule,
+//     MatInputModule
+//   ],
+//   templateUrl: './app.component.html',
+//   styleUrls: ['./app.component.scss'],
+// })
+// export class AppComponent {
+//   tabuladors: Tabulador[] = [];
+//   zonasDisponibles: Zona[] = [];
+//   barriosDisponibles: Barrio[] = [];
+//   selectedTabulador?: number | string;
+//   selectedZona?: number;
+//   selectedBarrio?: Barrio;
+//   loading: boolean = true;
+
+//   private tabuladoresUrl = 'https://microserviciouser.azurewebsites.net/api/tabulators';
+//   private apiKey = 'DJl40Xh-wOlVqJHEEekC6Ys-XWucJgnCcdh2LluBn358AzFuXCKIfw=='; // Reemplaza por tu clave real
+//   selectedTabuladorName: string | undefined;
+
+//   constructor(private http: HttpClient, public dialog: MatDialog) {
+//     this.getTabuladores().subscribe((tabuladores) => {
+//       this.tabuladors = tabuladores;
+//       this.loading = false; // Se oculta el spinner cuando los datos se cargan
+//     });
+//   }
+
+//   onTabuladorChange(tabuladorId: number | string) {
+//     let selectedTabulador;
+//     if (typeof tabuladorId === 'number') {
+//       this.selectedTabulador = tabuladorId;
+//        selectedTabulador = this.tabuladors.find(t => t.Id === tabuladorId);
+//     }
+//     if (typeof tabuladorId === 'string') {
+//       this.selectedTabulador = tabuladorId;
+//        selectedTabulador = this.tabuladors.find(t => t.Name === tabuladorId);
+//     }
+
+
+    
+//     this.selectedTabuladorName = selectedTabulador?.Name
+//     this.zonasDisponibles = selectedTabulador ? selectedTabulador.Zones || [] : [];
+//     this.barriosDisponibles = [];
+//   }
+
+//   onZonaChange(zonaId: number) {
+//     this.selectedZona = zonaId;
+//     const selectedZona = this.zonasDisponibles.find(z => z.Id === zonaId);
+//     this.barriosDisponibles = selectedZona ? selectedZona.Neiborhood || [] : [];
+//   }
+
+//   onBarrioSelect(barrio: Barrio) {
+//     this.selectedBarrio = barrio;
+//   }
+
+//   // Obtener tabuladores desde la API
+//   getTabuladores(): Observable<Tabulador[]> {
+//     return this.http.get<Tabulador[]>(this.tabuladoresUrl, { headers: this.getHeaders() });
+//   }
+
+//   private getHeaders(): HttpHeaders {
+//     return new HttpHeaders({
+//       'x-functions-key': this.apiKey,
+//     });
+//   }
+
+//   // Abrir el modal de edición
+//   openEditDialog(barrio: Barrio): void {
+//     const dialogRef = this.dialog.open(ModalFormNeiborhoodComponent, {
+//       width: '300px',
+//       data: { ...barrio }, // Clonamos el objeto barrio
+//     });
+
+//     dialogRef.afterClosed().subscribe((result: Barrio) => {
+//       if (result) {
+//         this.updateBarrio(result);
+//       }
+//     });
+//   }
+
+//   updateBarrio(barrio: Barrio): void {
+//     const index = this.barriosDisponibles.findIndex(b => b.Id === barrio.Id);
+//     if (index !== -1) {
+//       this.barriosDisponibles[index] = barrio;
+//     }
+//   }
+// }
+
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { HttpClient, HttpClientModule, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { ModalFormNeiborhoodComponent } from './modal-form-neiborhood/modal-form-neiborhood.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-// barrio.interface.ts
-export interface Barrio {
-  Id: number;
-  Name: string;
-  Price: string | number;
-  Idzone: number;
-}
-
-// zona.interface.ts
-export interface Zona {
-  Id: number;
-  Name: string;
-  Idtabulador: number;
-  Neiborhood: Barrio[];
-}
-
-// tabulador.interface.ts
-export interface Tabulador {
-  Id: number;
-  Name: string;
-  Zones: Zona[];
-}
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,
-    FormsModule, CommonModule,
-    MatGridListModule, MatFormFieldModule, HttpClientModule,MatProgressSpinnerModule,
-    MatButtonModule,
-    MatSelectModule, MatIconModule,
+  imports: [
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
     MatListModule,
-    MatCardModule,],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    MatButtonModule,
+    CommonModule,
+    RouterModule
+  ],
+  template: `
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenav">
+        <mat-nav-list>
+          <a mat-list-item routerLink="/" (click)="sidenav.close()">Home</a>
+          <a mat-list-item routerLink="/order" (click)="sidenav.close()">Pedidos</a>
+          <a mat-list-item routerLink="/tabulators" (click)="sidenav.close()">Tabuladores</a>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <mat-toolbar color="primary">
+          <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span>Delivery</span>
+        </mat-toolbar>
+
+        <div class="content">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  `,
+  styles: [`
+    .sidenav-container {
+      height: 100%;
+    }
+    .sidenav {
+      width: 250px;
+    }
+    .content {
+      padding: 0px;
+    }
+  `]
 })
 export class AppComponent {
 
-  tabuladors: Tabulador[] = [];
-  zonasDisponibles: Zona[] = [];
-  barriosDisponibles: Barrio[] = [];
-  selectedBarrio?: Barrio;
-  loading: boolean = true;  // Variable para mostrar el spinner
-
-
-  private tabuladoresUrl = 'https://microserviciouser.azurewebsites.net/api/tabulators';
-  private apiKey = 'DJl40Xh-wOlVqJHEEekC6Ys-XWucJgnCcdh2LluBn358AzFuXCKIfw==';  // Reemplaza 'TU_CLAVE_AQUI' por tu clave real
-
-  constructor(private http: HttpClient, public dialog: MatDialog) {
-    // Cargar los datos de tabuladores
-    this.getTabuladores().subscribe(tabuladores => {
-      this.tabuladors = tabuladores;
-      this.loading = false;  // Oculta el spinner cuando los datos están cargados
-
-    });
-  }
-
-  onTabuladorChange(event: MatSelectChange) {
-    const tabuladorId = event.value;
-    this.zonasDisponibles = this.tabuladors.find(t => t.Id === tabuladorId)?.Zones || [];
-    this.barriosDisponibles = []; // Limpiar los barrios cuando cambie el tabulador
-  }
-
-  onZonaChange(event: MatSelectChange) {
-    const zonaId = event.value;
-    const selectedZona = this.zonasDisponibles.find(z => z.Id === zonaId);
-    this.barriosDisponibles = selectedZona ? selectedZona.Neiborhood : [];
-  }
-
-  onBarrioSelect(barrio: Barrio) {
-    this.selectedBarrio = barrio;
-  }
-
-  getTabuladores(): Observable<Tabulador[]> {
-    return this.http.get<Tabulador[]>(this.tabuladoresUrl, { headers: this.getHeaders() });
-  }
-
-  private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'x-functions-key': this.apiKey
-    });
-  }
-
-  // Abrir el modal de edición
-  openEditDialog(barrio: Barrio): void {
-    const dialogRef = this.dialog.open(ModalFormNeiborhoodComponent, {
-      width: '300px',
-      data: { ...barrio }  // Clonamos el objeto barrio
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        // Aquí llamamos a la API para actualizar el barrio
-        this.updateBarrio(result);
-      }
-    });
-  }
-
-  updateBarrio(barrio: Barrio): void {
-    this.updateBarrioService(barrio).subscribe({
-      next: (response) => {
-        // Actualiza la lista de barrios disponibles con los cambios
-        this.getTabuladores().subscribe(tabuladores => {
-          this.tabuladors = tabuladores;
-          const selectedZona = this.zonasDisponibles.find(z => z.Id === barrio.Idzone);
-          if (selectedZona) {
-            const index = selectedZona.Neiborhood.findIndex(b => b.Id === barrio.Id);
-            if (index !== -1) {
-              selectedZona.Neiborhood[index] = barrio;
-            }
-          }
-        });
-      }
-    });
-  }
-
-  updateBarrioService(barrio: Barrio): Observable<Barrio> {
-    const url = `https://microserviciouser.azurewebsites.net/api/neiborhoods/${barrio.Id}`;
-    const headers = this.getHeaders();
-    return this.http.put<Barrio>(url, barrio, { headers })
-      .pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    console.error('Error en la API:', error);
-    return throwError('Algo salió mal; por favor intenta de nuevo más tarde.');
-  }
-
+  opened = false;
 }
