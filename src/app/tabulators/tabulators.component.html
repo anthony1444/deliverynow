@@ -1,3 +1,44 @@
-<pre>
-  app-tabulators
-</pre>
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Selecciona Tabulador, Zona y Barrio</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Selector de Tabulador -->
+    <mat-form-field appearance="fill">
+      <mat-label>Tabulador</mat-label>
+      <mat-select (selectionChange)="onTabuladorChange($event)">
+        <mat-option *ngFor="let tabulador of tabuladors" [value]="tabulador.Id">
+          {{ tabulador.Name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Selector de Zona -->
+    <mat-form-field appearance="fill">
+      <mat-label>Zona</mat-label>
+      <mat-select (selectionChange)="onZonaChange($event)" [disabled]="zonasDisponibles.length === 0">
+        <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona.Id">
+          {{ zona.Name }}
+
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <!-- Lista de Barrios -->
+  <div *ngIf="barriosDisponibles.length > 0">
+    <h3>Barrios Disponibles</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let barrio of barriosDisponibles" (click)="onBarrioSelect(barrio)">
+        {{ barrio.Name }} - {{ barrio.Price | currency }}
+        <button mat-icon-button (click)="openEditDialog(barrio)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+   
+  </mat-card-content>
+</mat-card>
