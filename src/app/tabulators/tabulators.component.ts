@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ModalFormNeiborhoodComponent } from '../modal-form-neiborhood/modal-form-neiborhood.component';
+import { environment } from '../../environments/environment';
 
 // barrio.interface.ts
 export interface Barrio {
@@ -61,7 +62,8 @@ export class TabulatorsComponent {
 
 
   private tabuladoresUrl = 'https://deliverypresentation.azurewebsites.net/api/tabulators';
-  private apiKey = 'DJl40Xh-wOlVqJHEEekC6Ys-XWucJgnCcdh2LluBn358AzFuXCKIfw==';  // Reemplaza 'TU_CLAVE_AQUI' por tu clave real
+  private apiKey = environment.apiKey;  // Reemplaza 'TU_CLAVE_AQUI' por tu clave real
+
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
     // Cargar los datos de tabuladores
