@@ -61,13 +61,13 @@ export class TabulatorsComponent {
   loading: boolean = true;  // Variable para mostrar el spinner
 
 
-  private tabuladoresUrl = 'https://deliverypresentation.azurewebsites.net/api/tabulators';
+  private tabuladoresUrl = `${environment}/api/tabulators`;
   private apiKey = environment.apiKey;  // Reemplaza 'TU_CLAVE_AQUI' por tu clave real
 
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
     // Cargar los datos de tabuladores
-    this.getTabuladores().subscribe(tabuladores => {
+    this.getTabuladores().subscribe((tabuladores:Tabulador[]) => {
       this.tabuladors = tabuladores;
       this.loading = false;  // Oculta el spinner cuando los datos están cargados
 
@@ -117,9 +117,9 @@ export class TabulatorsComponent {
 
   updateBarrio(barrio: Barrio): void {
     this.updateBarrioService(barrio).subscribe({
-      next: (response) => {
+      next: (response:any) => {
         // Actualiza la lista de barrios disponibles con los cambios
-        this.getTabuladores().subscribe(tabuladores => {
+        this.getTabuladores().subscribe((tabuladores:Tabulador[]) => {
           this.tabuladors = tabuladores;
           const selectedZona = this.zonasDisponibles.find(z => z.Id === barrio.Idzone);
           if (selectedZona) {
@@ -134,7 +134,7 @@ export class TabulatorsComponent {
   }
 
   updateBarrioService(barrio: Barrio): Observable<Barrio> {
-    const url = `https://deliverypresentation.azurewebsites.net/api/neiborhoods/${barrio.Id}`;
+    const url = `${environment}/api/neiborhoods/${barrio.Id}`;
     const headers = this.getHeaders();
     return this.http.put<Barrio>(url, barrio, { headers })
       .pipe(catchError(this.handleError));
