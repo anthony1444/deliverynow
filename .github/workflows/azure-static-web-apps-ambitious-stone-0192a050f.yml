@@ -28,6 +28,7 @@ jobs:
         run: |
           echo "Modifying environment.prod.ts"
           sed -i "s/apiKey: '',/apiKey: '${{ secrets.API_KEY }}',/" ./src/environments/environment.prod.ts
+          sed -i "s/apiKey: '',/apiKey: '${{ secrets.API_KEY }}',/" ./src/environments/environment.ts
       
       - name: Build Angular App
         run: npm run build
