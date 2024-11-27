@@ -67,7 +67,7 @@ export class TabulatorsComponent {
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
     // Cargar los datos de tabuladores
-    this.getTabuladores().subscribe((tabuladores:Tabulador[]) => {
+      this.getTabuladores().subscribe((tabuladores:Tabulador[]) => {
       this.tabuladors = tabuladores;
       this.loading = false;  // Oculta el spinner cuando los datos están cargados
 

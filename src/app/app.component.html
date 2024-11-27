@@ -1,59 +1,24 @@
-<div class="container">
-  <!-- Spinner para cuando los datos están cargando -->
-  <div *ngIf="loading" class="spinner-container">
-    <mat-spinner></mat-spinner>
-  </div>
-  test
-  <!-- Contenido principal que se muestra después de que los datos han cargado -->
-  <div *ngIf="!loading" class="content-container">
-    <!-- Campo de autocompletado para Tabulador -->
-    <mat-form-field appearance="fill">
-      <mat-label>Selecciona un Tabulador</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="Buscar tabulador"
-        [matAutocomplete]="autoTabulador"
-        [(ngModel)]="selectedTabuladorName"
-        (ngModelChange)="onTabuladorChange($event)"
-      />
-      <mat-autocomplete #autoTabulador="matAutocomplete">
-        <mat-option *ngFor="let tabulador of tabuladors" [value]="tabulador.Id">
-          {{ tabulador.Name }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/" (click)="sidenav.close()">Home</a>
+      <a mat-list-item routerLink="/order" (click)="sidenav.close()">Pedidos</a>
+      <a mat-list-item routerLink="/tabulators" (click)="sidenav.close()">Tabuladores</a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-    <!-- Campo de autocompletado para Zona -->
-    <mat-form-field appearance="fill" *ngIf="zonasDisponibles.length > 0">
-      <mat-label>Selecciona una Zona</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="Buscar zona"
-        [matAutocomplete]="autoZona"
-        [(ngModel)]="selectedZona"
-        (ngModelChange)="onZonaChange($event)"
-      />
-      <mat-autocomplete #autoZona="matAutocomplete">
-        <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona.Id">
-          {{ zona.Name }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Delivery</span>
+    </mat-toolbar>
 
-    <!-- Lista de Barrios Disponibles -->
-    <mat-list *ngIf="barriosDisponibles.length > 0">
-      <h3>Barrios Disponibles</h3>
-      <mat-list-item
-        *ngFor="let barrio of barriosDisponibles"
-        (click)="onBarrioSelect(barrio)"
-      >
-        {{ barrio.Name }} - {{ barrio.Price | currency }}
-        <button mat-icon-button (click)="openEditDialog(barrio)">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+

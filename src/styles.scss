@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
 
+:root {
+    --blue-servi-entrega:  rgb(0, 132, 255);
+    --pane-padding: 5px 42px;
+  }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

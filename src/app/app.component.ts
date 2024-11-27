@@ -160,43 +160,10 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatButtonModule,
     CommonModule,
-    RouterModule
+    RouterModule,    
   ],
-  template: `
-    <mat-sidenav-container class="sidenav-container">
-      <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenav">
-        <mat-nav-list>
-          <a mat-list-item routerLink="/" (click)="sidenav.close()">Home</a>
-          <a mat-list-item routerLink="/order" (click)="sidenav.close()">Pedidos</a>
-          <a mat-list-item routerLink="/tabulators" (click)="sidenav.close()">Tabuladores</a>
-        </mat-nav-list>
-      </mat-sidenav>
-
-      <mat-sidenav-content>
-        <mat-toolbar color="primary">
-          <button mat-icon-button (click)="sidenav.toggle()">
-            <mat-icon>menu</mat-icon>
-          </button>
-          <span>Delivery</span>
-        </mat-toolbar>
-
-        <div class="content">
-          <router-outlet></router-outlet>
-        </div>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  `,
-  styles: [`
-    .sidenav-container {
-      height: 100%;
-    }
-    .sidenav {
-      width: 250px;
-    }
-    .content {
-      padding: 0px;
-    }
-  `]
+  templateUrl:"./app.component.html",
+  styleUrls:["./app.component.scss"],
 })
 export class AppComponent {
 
