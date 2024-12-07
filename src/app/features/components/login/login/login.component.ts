@@ -7,10 +7,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatLabel } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterModule } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../../../auth.service';
+import { AuthResponse } from '../../../interfaces/authresponse.interface';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -36,18 +39,23 @@ export class LoginComponent {
   password: FormControl = new FormControl('hashed_password_123');
   data: any | null;
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public router:Router) {}
   sigIn() {
     this.authService
       .login({ username: this.username.value, password: this.password.value })
-      .subscribe((token: any) => {
-        this.data = token;
+      .subscribe({
+        next:(authResponse: AuthResponse) => {
+          if (authResponse.token == '') {
+            alert('Error en la autenticación')
+            return;
+          }
+          this.router.navigate(['/tabulators'])
+          localStorage.setItem('auth', JSON.stringify(authResponse))
+        },
+        error: ()=>{
+          alert('Error en la autenticación')
+        }
       });
-    console.table(this.data);
-    if (this.data) {
-      localStorage.setItem('serviExpressAuthToken', this.data);
-    } else {
-      alert('El aceso ap api continua restringido');
-    }
+    
   }
 }

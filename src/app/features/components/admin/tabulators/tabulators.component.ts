@@ -13,8 +13,9 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ModalFormNeiborhoodComponent } from '../modal-form-neiborhood/modal-form-neiborhood.component';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../../../environments/environment';
+import { ModalFormNeiborhoodComponent } from '../../../../modal-form-neiborhood/modal-form-neiborhood.component';
+;
 
 // barrio.interface.ts
 export interface Barrio {

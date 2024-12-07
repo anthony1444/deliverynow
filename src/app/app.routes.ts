@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { OrderComponent } from './order/order.component';
-import { TabulatorsComponent } from './tabulators/tabulators.component';
-import { LoginComponent } from './login/login.component';
+
+import { LoginComponent } from './features/components/login/login/login.component';
+import { routes as adminRoutes } from './features/components/admin/admin.routes';
+
 
 export const routes: Routes = [
-    { path: 'order', component: OrderComponent },
-    { path: 'tabulators', component: TabulatorsComponent },
+    { path:'', children: adminRoutes},
     { path:'login', component: LoginComponent}
 ];
