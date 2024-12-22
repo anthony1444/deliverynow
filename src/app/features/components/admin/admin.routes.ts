@@ -1,9 +1,5 @@
 import { Routes } from '@angular/router';
-import { OrderComponent } from './orders/order/order.component';
-import { TabulatorsComponent } from './tabulators/tabulators.component';
 import { AdminComponent } from './admin.component';
-
-
 
 export const routes: Routes = [ 
     { path: '', component:AdminComponent, children:[

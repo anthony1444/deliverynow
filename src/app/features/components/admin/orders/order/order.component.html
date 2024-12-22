@@ -1,3 +1,20 @@
-<pre>
-  app-order
-</pre>
+<div class="container">
+  <mat-card class="form-card">
+    <mat-card-title>Crear Orden</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Monto Total</mat-label>
+          <input matInput type="number" formControlName="totalAmount" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Dirección de Envío</mat-label>
+          <textarea matInput formControlName="shippingAddress"></textarea>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit">Crear Orden</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

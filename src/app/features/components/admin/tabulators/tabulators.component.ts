@@ -62,7 +62,7 @@ export class TabulatorsComponent {
   loading: boolean = true;  // Variable para mostrar el spinner
 
 
-  private tabuladoresUrl = `${environment.apiUrl}api/tabulators`;
+  private tabuladoresUrl = `${environment.apiUrl}tabulators`;
   private apiKey = environment.apiKey;  // Reemplaza 'TU_CLAVE_AQUI' por tu clave real
 
 
@@ -135,7 +135,7 @@ export class TabulatorsComponent {
   }
 
   updateBarrioService(barrio: Barrio): Observable<Barrio> {
-    const url = `${environment.apiUrl}api/neiborhoods/${barrio.Id}`;
+    const url = `${environment.apiUrl}neiborhoods/${barrio.Id}`;
     const headers = this.getHeaders();
     return this.http.put<Barrio>(url, barrio, { headers })
       .pipe(catchError(this.handleError));

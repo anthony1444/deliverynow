@@ -12,7 +12,7 @@ interface User{
 })
 export class AuthService {
 
-  _baseURL:string="https://deliveryfunction.azurewebsites.net/api";
+  _baseURL:string=`${environment.apiUrl}`;
   private apiKey = environment.apiKey;  // Reemplaza 'TU_CLAVE_AQUI' por tu clave real
 
   //private _http:HttpClient=Inject(HttpClient);
