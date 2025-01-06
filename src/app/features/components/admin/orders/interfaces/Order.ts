@@ -8,4 +8,6 @@ export interface Order {
     createdAt: Date;
     updatedAt: Date;
     delivererId?: number;
+    customerName:string
+    idNeiborhood:number
 }

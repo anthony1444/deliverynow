@@ -6,26 +6,20 @@
     <mat-card-title>Selecciona Tabulador, Zona y Barrio</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <!-- Selector de Tabulador -->
-    <mat-form-field appearance="fill">
-      <mat-label>Tabulador</mat-label>
-      <mat-select (selectionChange)="onTabuladorChange($event)">
-        <mat-option *ngFor="let tabulador of tabuladors" [value]="tabulador.Id">
-          {{ tabulador.Name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
 
-    <!-- Selector de Zona -->
-    <mat-form-field appearance="fill">
-      <mat-label>Zona</mat-label>
-      <mat-select (selectionChange)="onZonaChange($event)" [disabled]="zonasDisponibles.length === 0">
-        <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona.Id">
-          {{ zona.Name }}
+<app-select-custom
+  label="Tabulador"
+  [options]="tabuladors"
+  (selectionChange)="onTabuladorChange($event)">
+</app-select-custom>
 
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<!-- Selector de Zona -->
+<app-select-custom
+  label="Zona"
+  [options]="zonasDisponibles"
+  [disabled]="zonasDisponibles.length === 0"
+  (selectionChange)="onZonaChange($event)">
+</app-select-custom>
 
   <!-- Lista de Barrios -->
   <div *ngIf="barriosDisponibles.length > 0">

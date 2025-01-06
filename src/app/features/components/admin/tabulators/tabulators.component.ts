@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../environments/environment';
 import { ModalFormNeiborhoodComponent } from '../../../../modal-form-neiborhood/modal-form-neiborhood.component';
+import { SelectCustomComponent } from '../../../../shared/components/select-custom/select-custom.component';
 ;
 
 // barrio.interface.ts
@@ -46,6 +47,7 @@ export interface Tabulador {
   imports: [RouterOutlet,
     FormsModule, CommonModule,
     MatGridListModule, MatFormFieldModule, HttpClientModule,MatProgressSpinnerModule,
+    SelectCustomComponent,
     MatButtonModule,
     MatSelectModule, MatIconModule,
     MatListModule,
@@ -68,21 +70,21 @@ export class TabulatorsComponent {
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
     // Cargar los datos de tabuladores
-      this.getTabuladores().subscribe((tabuladores:Tabulador[]) => {
+    this.getTabuladores().subscribe((tabuladores:Tabulador[]) => {
       this.tabuladors = tabuladores;
       this.loading = false;  // Oculta el spinner cuando los datos están cargados
 
     });
   }
 
-  onTabuladorChange(event: MatSelectChange) {
-    const tabuladorId = event.value;
+  onTabuladorChange(event: any) {
+    const tabuladorId = event.Id;
     this.zonasDisponibles = this.tabuladors.find(t => t.Id === tabuladorId)?.Zones || [];
     this.barriosDisponibles = []; // Limpiar los barrios cuando cambie el tabulador
   }
 
-  onZonaChange(event: MatSelectChange) {
-    const zonaId = event.value;
+  onZonaChange(event: any) {
+    const zonaId = event.Id;
     const selectedZona = this.zonasDisponibles.find(z => z.Id === zonaId);
     this.barriosDisponibles = selectedZona ? selectedZona.Neiborhood : [];
   }

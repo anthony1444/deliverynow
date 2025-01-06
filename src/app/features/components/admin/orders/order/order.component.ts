@@ -11,6 +11,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { Barrio, Tabulador, Zona } from '../../tabulators/tabulators.component';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../../../environments/environment';
+import { SelectCustomComponent } from '../../../../../shared/components/select-custom/select-custom.component';
 
 @Component({
   selector: 'app-order',
@@ -25,23 +30,53 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     FormsModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule,
+    SelectCustomComponent
   ],
-  styleUrl:'./order.component.scss',
-  
+  styleUrl: './order.component.scss',
+
 })
 export class OrderComponent {
 
   orderForm: FormGroup = new FormGroup({
     totalAmount: new FormControl(),
     shippingAddress: new FormControl(),
+    idNeiborhood: new FormControl(),
+    customerName:new FormControl()
   });
 
-  constructor(private fb: FormBuilder, private orderService: OrderService) {
+  tabuladors: Tabulador[] = [];
+  zonasDisponibles: Zona[] = [];
+  barriosDisponibles: Barrio[] = [];
+  selectedBarrio?: Barrio;
+  loading: boolean = true;  // Variable para mostrar el spinner
+  private tabuladoresUrl = `${environment.apiUrl}tabulators`;
+  private apiKey = environment.apiKey;  // Reemplaza 'TU_CLAVE_AQUI' por tu clave real
+
+
+
+  constructor(private fb: FormBuilder, private orderService: OrderService, public http: HttpClient) {
 
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getTabuladores().subscribe((tabuladores: Tabulador[]) => {
+      this.tabuladors = tabuladores;
+      this.loading = false;  // Oculta el spinner cuando los datos están cargados
+
+    });
+  }
+
+  getTabuladores(): Observable<Tabulador[]> {
+    return this.http.get<Tabulador[]>(this.tabuladoresUrl, { headers: this.getHeaders() });
+  }
+
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'x-functions-key': this.apiKey
+    });
+  }
 
   submitOrder() {
     if (this.orderForm.valid) {
@@ -54,6 +89,8 @@ export class OrderComponent {
         shippingAddress: this.orderForm.value.shippingAddress,
         createdAt: new Date(),
         updatedAt: new Date(),
+        customerName: this.orderForm.value.customerName,
+        idNeiborhood:this.orderForm.value.idNeiborhood,
         delivererId: this.orderForm.value.delivererId
       };
 
@@ -71,4 +108,30 @@ export class OrderComponent {
       alert('Por favor, completa los campos requeridos.');
     }
   }
+  onTabuladorChange(event: any) {
+    const tabuladorId = event.Id;
+    this.zonasDisponibles = this.tabuladors.find(t => t.Id === tabuladorId)?.Zones || [];
+    this.barriosDisponibles = []; // Limpiar los barrios cuando cambie el tabulador
+  }
+
+  onZonaChange(event: any) {
+    const zonaId = event.Id;
+    const selectedZona = this.zonasDisponibles.find(z => z.Id === zonaId);
+    this.barriosDisponibles = selectedZona ? selectedZona.Neiborhood : [];
+  }
+
+
+  onBarrioChange(event: any) {
+    const barrioId = event.Id;
+    const selectedBarrio = this.barriosDisponibles.find(z => z.Id === barrioId);
+    this.orderForm.get('idNeiborhood')?.setValue(selectedBarrio?.Id);
+    this.orderForm.get('totalAmount')?.setValue(selectedBarrio?.Price);
+    
+
+  }
+
+  onBarrioSelect(barrio: Barrio) {
+    this.selectedBarrio = barrio;
+  }
+
 }
