@@ -23,7 +23,7 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Update environment.prod.ts
         run: |
           echo "Modifying environment.prod.ts"
@@ -31,7 +31,7 @@ jobs:
           sed -i "s/apiKey: '',/apiKey: '${{ secrets.API_KEY }}',/" ./src/environments/environment.ts
       
       - name: Build Angular App
-        run: npm run build
+        run: npm run buildprod
 
       - name: Check API_KEY length
         run: echo "API_KEY length is ${#API_KEY}"
