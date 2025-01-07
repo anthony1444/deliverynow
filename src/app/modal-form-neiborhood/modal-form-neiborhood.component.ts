@@ -6,13 +6,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 @Component({
-  selector: 'app-modal-form-neiborhood',
-  templateUrl: './modal-form-neiborhood.component.html',
-  styleUrl: './modal-form-neiborhood.component.css',
-  standalone:true,
-  imports:[MatFormFieldModule, CommonModule,MatDialogModule, FormsModule,MatInputModule,MatButtonModule]
-
-  })
+    selector: 'app-modal-form-neiborhood',
+    templateUrl: './modal-form-neiborhood.component.html',
+    styleUrl: './modal-form-neiborhood.component.css',
+    imports: [MatFormFieldModule, CommonModule, MatDialogModule, FormsModule, MatInputModule, MatButtonModule]
+})
 export class ModalFormNeiborhoodComponent {
   constructor(
     public dialogRef: MatDialogRef<ModalFormNeiborhoodComponent>,

@@ -1,9 +1,37 @@
 {
+    "routes": [
+        {
+            "route": "/ngsw-worker.js",
+            "headers": {
+                "Cache-Control": "no-cache"
+            }
+        },
+        {
+            "route": "/ngsw.json",
+            "headers": {
+                "Cache-Control": "no-cache"
+            }
+        },
+        {
+            "route": "/favicon.ico",
+            "headers": {
+                "Cache-Control": "no-cache"
+            }
+        }
+    ],
     "navigationFallback": {
         "rewrite": "index.html",
         "exclude": [
+            "/ngsw-worker.js",
+            "/ngsw.json",
+            "ngsw-worker.js",
+            "ngsw.json",
             "/images/*.{png,jpg, gif, ico}",
             "/*.{css.scss,js}"
         ]
+    },
+    "mimeTypes": {
+        ".js": "application/javascript",
+        ".json": "application/json"
     }
 }

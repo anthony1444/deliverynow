@@ -9,18 +9,17 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { routes } from './admin.routes';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  standalone:true,
-  imports:[
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    MatButtonModule,
-    CommonModule,
-    RouterOutlet
-  ]
+    selector: 'app-admin',
+    templateUrl: './admin.component.html',
+    imports: [
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule,
+        MatButtonModule,
+        CommonModule,
+        RouterOutlet
+    ]
 })
 export class AdminComponent {
   opened = false;

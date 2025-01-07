@@ -16,23 +16,22 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    RouterModule,
-    CommonModule,
-    MatButtonModule,
-    MatInputModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatLabel,
-    MatCardModule,
-    MatSidenavModule,
-    ReactiveFormsModule,
-  ],
-  providers: [AuthService],
-  templateUrl: './login.component.html',
-  styleUrl: 'login.component.scss',
+    selector: 'app-login',
+    imports: [
+        RouterModule,
+        CommonModule,
+        MatButtonModule,
+        MatInputModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        MatLabel,
+        MatCardModule,
+        MatSidenavModule,
+        ReactiveFormsModule,
+    ],
+    providers: [AuthService],
+    templateUrl: './login.component.html',
+    styleUrl: 'login.component.scss'
 })
 export class LoginComponent {
   username: FormControl = new FormControl('johndoe');

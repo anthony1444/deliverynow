@@ -42,22 +42,18 @@ export interface Tabulador {
 }
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet,
-    FormsModule, CommonModule,
-    MatGridListModule, MatFormFieldModule, 
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule,MatProgressSpinnerModule,
-    SelectCustomComponent,
-    MatButtonModule,
-    MatSelectModule, MatIconModule,
-    MatListModule,
-    MatCardModule,],
-  templateUrl: './tabulators.component.html',
-  styleUrls: ['./tabulators.component.scss']
+    selector: 'app-root',
+    imports: [
+        FormsModule, CommonModule,
+        MatGridListModule, MatFormFieldModule,
+        MatProgressSpinnerModule,
+        SelectCustomComponent,
+        MatButtonModule,
+        MatSelectModule, MatIconModule,
+        MatListModule,
+        MatCardModule,],
+    templateUrl: './tabulators.component.html',
+    styleUrls: ['./tabulators.component.scss']
 })
 export class TabulatorsComponent {
 

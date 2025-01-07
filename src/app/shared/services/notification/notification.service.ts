@@ -10,7 +10,10 @@ export class NotificationService {
   private readonly VAPID_PUBLIC_KEY = environment.apiNotificationHub; // Clave pública VAPID
   private readonly BACKEND_URL = ''; // URL de tu backend o Azure Function
 
-  constructor(private swPush: SwPush, private http: HttpClient) {}
+  constructor(private swPush: SwPush, private http: HttpClient) {
+    console.log(this.VAPID_PUBLIC_KEY);
+    
+  }
 
   /**
    * Solicita permisos para notificaciones al usuario.
@@ -27,6 +30,8 @@ export class NotificationService {
    * Suscribe al usuario a notificaciones push.
    */
   async subscribeToNotifications(): Promise<void> {
+    console.log(this.VAPID_PUBLIC_KEY);
+
     if (!this.swPush.isEnabled) {
       throw new Error('Push notifications are not enabled in this browser.');
     }

@@ -10,16 +10,15 @@ interface SelectorOption {
 }
 
 @Component({
-  selector: 'app-select-custom',
-  standalone:true,
-  imports:[
-    MatInputModule,
-    MatSelectModule,
-    MatOptionModule, 
-    CommonModule
-  ],
-  templateUrl: './select-custom.component.html',
-  styleUrls: ['./select-custom.component.scss']
+    selector: 'app-select-custom',
+    imports: [
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        CommonModule
+    ],
+    templateUrl: './select-custom.component.html',
+    styleUrls: ['./select-custom.component.scss']
 })
 export class SelectCustomComponent   {
 

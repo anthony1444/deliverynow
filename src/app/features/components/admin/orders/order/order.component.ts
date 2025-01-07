@@ -13,34 +13,27 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { Barrio, Tabulador, Zona } from '../../tabulators/tabulators.component';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { SelectCustomComponent } from '../../../../../shared/components/select-custom/select-custom.component';
 import { NotificationService } from '../../../../../shared/services/notification/notification.service';
 
 @Component({
-  selector: 'app-order',
-  standalone: true,
-  templateUrl: './order.component.html',
-  imports: [
-    MatButtonModule,
-    MatIconModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    MatInputModule,
-    MatCardModule,
-    
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule,
-    SelectCustomComponent
-  ],
-  styleUrl: './order.component.scss',
-
+    selector: 'app-order',
+    templateUrl: './order.component.html',
+    imports: [
+        MatButtonModule,
+        MatIconModule,
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatInputModule,
+        MatCardModule,
+        SelectCustomComponent
+    ],
+    styleUrl: './order.component.scss'
 })
 export class OrderComponent {
 

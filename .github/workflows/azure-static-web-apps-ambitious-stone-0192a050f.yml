@@ -23,12 +23,14 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
       - name: Update environment.prod.ts
         run: |
           echo "Modifying environment.prod.ts"
           sed -i "s/apiKey: '',/apiKey: '${{ secrets.API_KEY }}',/" ./src/environments/environment.prod.ts
           sed -i "s/apiKey: '',/apiKey: '${{ secrets.API_KEY }}',/" ./src/environments/environment.ts
+          sed -i "s/apiNotificationHub: '',/apiNotificationHub: '${{ secrets.APINOTIFICATIONHUB }}',/" ./src/environments/environment.prod.ts
+          sed -i "s/apiNotificationHub: '',/apiNotificationHub: '${{ secrets.APINOTIFICATIONHUB }}',/" ./src/environments/environment.ts
       
       - name: Build Angular App
         run: npm run buildprod

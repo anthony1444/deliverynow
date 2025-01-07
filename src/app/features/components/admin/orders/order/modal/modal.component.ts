@@ -5,10 +5,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-modal',
-  standalone: true,
-  imports: [CommonModule, MatListModule, MatButtonModule],
-  template: `
+    selector: 'app-modal',
+    imports: [CommonModule, MatListModule, MatButtonModule],
+    template: `
    <div class="modal">
     <h1 mat-dialog-title class="modalTitle">Select an Item</h1>
     <div mat-dialog-content>
@@ -23,7 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
     </div>
     </div>
   `,
-  styles:[`
+    styles: [`
       .modal{
         padding: 1rem;  
         border-radius: 0.5rem;
