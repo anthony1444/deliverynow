@@ -17,6 +17,10 @@
             "headers": {
                 "Cache-Control": "no-cache"
             }
+        },
+        {
+            "route": "/manifest.json",
+            "serve": "/manifest.json"
         }
     ],
     "navigationFallback": {
