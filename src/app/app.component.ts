@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NotificationService } from './shared/services/notification/notification.service';
 import { environment } from '../environments/environment';
-import { SwUpdate } from '@angular/service-worker';
 
 
 @Component({
@@ -37,30 +36,57 @@ export class AppComponent {
   notificationStatus: string = '';
 
 
-  constructor(private swUpdate: SwUpdate) {}
+  constructor(private notificationService: NotificationService) { }
 
-  ngOnInit(): void {
-    this.checkForUpdates();
+  async ngOnInit(): Promise<void> {
+
+
+    await this.enableNotifications();
+    this.checkNotificationStatus();
   }
 
- checkForUpdates(): void {
-    // Verificar si el Service Worker está habilitado
-    if (this.swUpdate.isEnabled) {
-      // Comprobar si hay una actualización disponible
-      this.swUpdate.checkForUpdate().then(() => {
-        console.log('Verificación de actualización completada.');
-      }).catch((error) => {
-        console.error('Error al verificar actualizaciones:', error);
-      });
 
-      // Detectar cuando la nueva versión esté disponible (esto debe manejarse de manera diferente)
-      this.swUpdate.activateUpdate().then((event) => {
-        console.log('Nueva versión disponible:', event);
-        // Notificar al usuario que hay una nueva versión
-        if (confirm('¡Hay una nueva versión disponible! ¿Quieres actualizar?')) {
-          window.location.reload();
-        }
-      });
+  async enableNotifications2(): Promise<void> {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        console.log('Permiso concedido para notificaciones.');
+      } else if (permission === 'denied') {
+        console.log('Permiso denegado para notificaciones. Revisa la configuración del navegador.');
+      }
+    } catch (error) {
+      console.error('Error solicitando permisos de notificación:', error);
+    }
+  }
+  
+  async enableNotifications(): Promise<void> {
+    try {
+      const permission = await this.notificationService.requestPermission();
+
+      if (permission === 'granted') {
+        await this.notificationService.subscribeToNotifications();
+        this.notificationStatus = 'Notifications are enabled.';
+      } else if (permission === 'denied') {
+        this.notificationStatus =
+          'Notifications have been denied. Please enable them in browser settings.';
+      } else {
+        this.notificationStatus = 'Notifications are not enabled yet.';
+      }
+    } catch (error) {
+      console.error('Failed to enable notifications:', error);
+      this.notificationStatus =
+        'Failed to enable notifications. Check console for details.';
+    }
+  }
+
+  private checkNotificationStatus(): void {
+    console.log("a");
+    
+    if (Notification.permission === 'granted') {
+      this.notificationStatus = 'Notifications are already enabled.';
+    } else if (Notification.permission === 'denied') {
+      this.notificationStatus =
+        'Notifications are blocked. Please enable them in browser settings.';
     }
   }
 }

@@ -20,8 +20,10 @@ export class NotificationService {
    * @returns Una promesa con el resultado del permiso.
    */
   async requestPermission(): Promise<NotificationPermission> {
-    if (Notification.permission === 'default') {
-      return await Notification.requestPermission();
+    if (Notification.permission === 'denied') {
+      const  result = await Notification.requestPermission()
+      console.log(result)
+      return result;
     }
     return Notification.permission;
   }
