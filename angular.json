@@ -30,7 +30,9 @@
               "src/assets",
               "src/staticwebapp.config.json",
               "src/firebase-messaging-sw.js",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/public"
+
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
