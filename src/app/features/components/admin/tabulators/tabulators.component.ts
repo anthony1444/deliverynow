@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { HttpClient, HttpClientModule, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +46,11 @@ export interface Tabulador {
   standalone: true,
   imports: [RouterOutlet,
     FormsModule, CommonModule,
-    MatGridListModule, MatFormFieldModule, HttpClientModule,MatProgressSpinnerModule,
+    MatGridListModule, MatFormFieldModule, 
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule,MatProgressSpinnerModule,
     SelectCustomComponent,
     MatButtonModule,
     MatSelectModule, MatIconModule,
