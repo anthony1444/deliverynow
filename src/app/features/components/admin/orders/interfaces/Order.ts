@@ -10,4 +10,5 @@ export interface Order {
     delivererId?: number;
     customerName:string
     idNeiborhood:number
+    iduser:number
 }

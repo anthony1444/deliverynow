@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { SelectCustomComponent } from '../../../../../shared/components/select-custom/select-custom.component';
+import { NotificationService } from '../../../../../shared/services/notification/notification.service';
 
 @Component({
   selector: 'app-order',
@@ -56,16 +57,14 @@ export class OrderComponent {
 
 
 
-  constructor(private fb: FormBuilder, private orderService: OrderService, public http: HttpClient) {
+  constructor(private fb: FormBuilder, private orderService: OrderService, public http: HttpClient, private notificationService: NotificationService) {
 
   }
 
   ngOnInit(): void {
-    this.getTabuladores().subscribe((tabuladores: Tabulador[]) => {
-      this.tabuladors = tabuladores;
-      this.loading = false;  // Oculta el spinner cuando los datos están cargados
 
-    });
+
+   
   }
 
   getTabuladores(): Observable<Tabulador[]> {
@@ -79,6 +78,7 @@ export class OrderComponent {
   }
 
   submitOrder() {
+    const iduser = JSON.parse(localStorage.getItem('auth') ?? '').user.id;
     if (this.orderForm.valid) {
       const order: Order = {
         id: 0, // El backend debería manejar el ID automáticamente
@@ -91,7 +91,8 @@ export class OrderComponent {
         updatedAt: new Date(),
         customerName: this.orderForm.value.customerName,
         idNeiborhood:this.orderForm.value.idNeiborhood,
-        delivererId: this.orderForm.value.delivererId
+        delivererId: this.orderForm.value.delivererId,
+        iduser:iduser,
       };
 
       this.orderService.createOrder(order).subscribe({

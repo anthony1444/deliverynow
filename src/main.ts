@@ -1,6 +1,14 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+import { AppComponent } from './app/app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { provideServiceWorker } from '@angular/service-worker';
+import { importProvidersFrom } from '@angular/core';
+import { environment } from './environments/environment';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(HttpClientModule),
+    environment.production ? provideServiceWorker('ngsw-worker.js') : []
+  ]
+}).catch(err => console.error(err));

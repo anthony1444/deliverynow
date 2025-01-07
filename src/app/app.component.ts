@@ -92,7 +92,7 @@
 //     }
 
 
-    
+
 //     this.selectedTabuladorName = selectedTabulador?.Name
 //     this.zonasDisponibles = selectedTabulador ? selectedTabulador.Zones || [] : [];
 //     this.barriosDisponibles = [];
@@ -149,6 +149,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NotificationService } from './shared/services/notification/notification.service';
+import { HttpClient } from '@angular/common/http';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -160,12 +163,50 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatButtonModule,
     CommonModule,
-    RouterModule,    
+    RouterModule,
   ],
-  templateUrl:"./app.component.html",
-  styleUrls:["./app.component.scss"],
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
 
+
   opened = false;
+  notificationStatus: string = '';
+
+
+  constructor(private notificationService: NotificationService) { }
+
+  ngOnInit(): void {
+    this.checkNotificationStatus();
+  }
+
+  async enableNotifications(): Promise<void> {
+    try {
+      const permission = await this.notificationService.requestPermission();
+
+      if (permission === 'granted') {
+        await this.notificationService.subscribeToNotifications();
+        this.notificationStatus = 'Notifications are enabled.';
+      } else if (permission === 'denied') {
+        this.notificationStatus =
+          'Notifications have been denied. Please enable them in browser settings.';
+      } else {
+        this.notificationStatus = 'Notifications are not enabled yet.';
+      }
+    } catch (error) {
+      console.error('Failed to enable notifications:', error);
+      this.notificationStatus =
+        'Failed to enable notifications. Check console for details.';
+    }
+  }
+
+  private checkNotificationStatus(): void {
+    if (Notification.permission === 'granted') {
+      this.notificationStatus = 'Notifications are already enabled.';
+    } else if (Notification.permission === 'denied') {
+      this.notificationStatus =
+        'Notifications are blocked. Please enable them in browser settings.';
+    }
+  }
 }
