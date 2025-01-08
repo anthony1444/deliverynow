@@ -23,19 +23,24 @@
 //       })
 //     );
 //   });
-self.addEventListener('push', (event) => {
-  const data = event.data?.json() || {};
-  const title = data.title || 'Notification';
-  const options = {
-    body: data.message || 'Default message',
-    icon: '/assets/icons/icon-512x512.png', // Ajusta según tu icono
-  };
-  event.waitUntil(self.registration.showNotification(title, options));
-});
+self.addEventListener('push', event => {
+  const data = event.data.json();
+  console.log('Notificación recibida:', data);
 
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
   event.waitUntil(
-    clients.openWindow('/') // Ajusta según tu ruta
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon,
+      data: data.data
+    })
   );
 });
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const url = event.notification.data.url;
+  if (url) {
+    clients.openWindow(url);
+  }
+});
+
