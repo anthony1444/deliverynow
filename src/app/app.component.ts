@@ -57,6 +57,9 @@ export class AppComponent {
     this.requestPermission(); // Solicitar permiso al cargar la aplicación
   }
 
+
+  
+
   // Solicitar permiso para recibir notificaciones
   async requestPermission(): Promise<void> {
     if (Notification.permission === 'default') {
@@ -76,7 +79,7 @@ export class AppComponent {
   async subscribeToNotifications(): Promise<void> {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
       try {
-        const registration = await navigator.serviceWorker.register('/ngsw-worker.js'); // Registra el service worker
+        const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js'); // Registra el service worker
         console.log('Service Worker registrado con éxito:', registration);
 
         const subscription = await registration.pushManager.subscribe({
@@ -85,7 +88,6 @@ export class AppComponent {
         });
 
         console.log('Suscripción a notificaciones:', subscription);
-        this.sendNotification(subscription.endpoint,'hola')
         // Aquí puedes enviar la suscripción al backend si lo deseas,
         // pero ya que no quieres backend, puedes omitir este paso.
         
@@ -114,35 +116,16 @@ export class AppComponent {
   }
 
 
-  sendNotification(endpoint: string, message: string) {
-    // Crea los headers para la autenticación con la SAS Key
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'oDDZy2WUN0TdnHff0UBsTki8nnxSk5rUxwR6RIvMMb0=',
-    });
-
-    // Cuerpo de la solicitud (el mensaje de la notificación)
-    const body = {
-      endpoint: endpoint,
-      payload: {
-        notification: {
-          title: 'Notificación desde Angular',
-          body: message,
-        }
-      }
+  sendNotification() {
+    const payload = {
+      title: 'Hello from Azure Function!',
+      body: 'This is a test notification.'
     };
 
-    // Realiza la solicitud POST a Azure Notification Hub para enviar la notificación
-    this.http
-      .post(this.NOTIFICATION_HUB_URL, body, { headers })
-      .subscribe(
-        (response) => {
-          console.log('Notificación enviada correctamente:', response);
-        },
-        (error) => {
-          console.error('Error al enviar la notificación:', error);
-        }
-      );
+    this.http.post('https://<Your_Function_Url>/api/SendNotification', payload)
+      .subscribe(response => {
+        console.log('Notification sent:', response);
+      });
   }
 
   

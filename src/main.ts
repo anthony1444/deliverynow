@@ -4,6 +4,15 @@ import { AppComponent } from './app/app.component';
 
 import { appConfig } from './app/app.config';
 import { environment } from './environments/environment';
+import { enableProdMode } from '@angular/core';
+
+
+if (environment.production) {
+  enableProdMode();
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/ngsw-worker.js');
+  }
+}
 
 bootstrapApplication(AppComponent, appConfig).then(() => {
   // Verificar si el Service Worker está registrado
