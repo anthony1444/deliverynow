@@ -52,6 +52,7 @@ export interface Tabulador {
         MatSelectModule, MatIconModule,
         MatListModule,
         MatCardModule,],
+        standalone:true,
     templateUrl: './tabulators.component.html',
     styleUrls: ['./tabulators.component.scss']
 })

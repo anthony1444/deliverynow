@@ -29,6 +29,7 @@ import { Router } from '@angular/router';
         MatSidenavModule,
         ReactiveFormsModule,
     ],
+    standalone:true,
     providers: [AuthService],
     templateUrl: './login.component.html',
     styleUrl: 'login.component.scss'

@@ -1,37 +1,29 @@
-self.addEventListener('push', function(event) {
-  // Asegúrate de que el evento tiene datos
-  const data = event.data ? event.data.json() : {}; // Si no hay datos, se asigna un objeto vacío
+// This sample application is using 9.22, make sure you are importing the same version
 
-  console.log('Datos de la notificación recibidos:', data);  // Imprime los datos recibidos en la consola del service worker
+// import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 
-  // Verifica que los datos de la notificación son completos
-  if (data.title && data.body) {
-    // Definir las opciones de la notificación
-    const options = {
-      body: data.body, // El cuerpo de la notificación
-      icon: 'assets/icons/icon-192x192.png', // Ruta del icono de la notificación
-      badge: 'assets/icons/badge.png', // Opcional: un badge para la notificación
-      actions: [
-        {
-          action: 'open_url',
-          title: 'Abrir',
-          icon: 'assets/icons/open-icon.png',
-        }
-      ]
-    };
 
-    // Mostrar la notificación
-    event.waitUntil(
-      self.registration.showNotification(data.title, options) // Mostrar la notificación con título y opciones
-    );
+const firebaseApp = initializeApp({
+  apiKey: "AIzaSyCIVYLJIapxu5b7QHU1MXDjrRn47ssk-H0",
+  authDomain: "delivery-fffde.firebaseapp.com",
+  projectId: "delivery-fffde",
+  storageBucket: "delivery-fffde.firebasestorage.app",
+  messagingSenderId: "244577228746",
+  appId: "1:244577228746:web:b828118e21a2df1b596133",
+  measurementId: "G-2QLPE6BHRE"
+});
 
-    // Enviar los datos a los clientes (páginas abiertas)
-    self.clients.matchAll().then(clients => {
-      clients.forEach(client => {
-        client.postMessage(data);  // Enviar los datos (title, body) al cliente
-      });
-    });
-  } else {
-    console.log('Faltan datos de la notificación:', data);  // Si faltan datos
-  }
+const messaging = getMessaging(firebaseApp);
+
+getToken(messaging, { vapidKey: "BNQprvrTFTKgkkFiFiOg_H9P4Ry6RxEPvl2EB1hyawKuVwlZ010gNqj2SLWidZGtyeuXD90GlZC0EwdrERPA1UM" })
+        .then((currentToken) => {
+            if (currentToken) {
+                console.log('client token', currentToken)
+            } else {
+                console.log('No registration token available. Request permission to generate one.');
+            }
+        }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
 });

@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
     selector: 'app-modal-form-neiborhood',
     templateUrl: './modal-form-neiborhood.component.html',
     styleUrl: './modal-form-neiborhood.component.css',
+    standalone:true,
     imports: [MatFormFieldModule, CommonModule, MatDialogModule, FormsModule, MatInputModule, MatButtonModule]
 })
 export class ModalFormNeiborhoodComponent {

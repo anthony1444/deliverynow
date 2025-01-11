@@ -17,6 +17,7 @@ interface SelectorOption {
         MatOptionModule,
         CommonModule
     ],
+    standalone:true,
     templateUrl: './select-custom.component.html',
     styleUrls: ['./select-custom.component.scss']
 })

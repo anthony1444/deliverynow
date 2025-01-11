@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { SelectCustomComponent } from '../../../../../shared/components/select-custom/select-custom.component';
-import { NotificationService } from '../../../../../shared/services/notification/notification.service';
 
 @Component({
     selector: 'app-order',
@@ -33,6 +32,7 @@ import { NotificationService } from '../../../../../shared/services/notification
         MatCardModule,
         SelectCustomComponent
     ],
+    standalone:true,
     styleUrl: './order.component.scss'
 })
 export class OrderComponent {
@@ -54,7 +54,7 @@ export class OrderComponent {
 
 
 
-  constructor(private fb: FormBuilder, private orderService: OrderService, public http: HttpClient, private notificationService: NotificationService) {
+  constructor(private fb: FormBuilder, private orderService: OrderService, public http: HttpClient, ) {
 
   }
 

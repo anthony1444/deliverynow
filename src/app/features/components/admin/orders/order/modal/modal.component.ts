@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'app-modal',
     imports: [CommonModule, MatListModule, MatButtonModule],
+    standalone:true,
     template: `
    <div class="modal">
     <h1 mat-dialog-title class="modalTitle">Select an Item</h1>

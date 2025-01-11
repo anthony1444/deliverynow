@@ -7,18 +7,13 @@ import { environment } from './environments/environment';
 import { enableProdMode } from '@angular/core';
 
 
-if (environment.production) {
-  enableProdMode();
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/ngsw-worker.js');
-  }
-}
+
 
 bootstrapApplication(AppComponent, appConfig).then(() => {
   // Verificar si el Service Worker está registrado
   if (environment.production && 'serviceWorker' in navigator) {
     navigator.serviceWorker
-      .register('ngsw-worker.js')
+      .register('firebase-messaging-sw.js')
       .then((registration) => {
         console.log('Service Worker registrado con éxito:', registration);
       })

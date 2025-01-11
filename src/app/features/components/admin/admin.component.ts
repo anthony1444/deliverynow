@@ -19,7 +19,8 @@ import { routes } from './admin.routes';
         MatButtonModule,
         CommonModule,
         RouterOutlet
-    ]
+    ],
+    standalone:true
 })
 export class AdminComponent {
   opened = false;
